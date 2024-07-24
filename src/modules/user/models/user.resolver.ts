@@ -7,7 +7,7 @@ import { UserType } from "../dto/user.type";
 export class UserResolver {
   constructor(private readonly userService: UserService) {}
 
-  @Mutation(() => Boolean)
+  @Mutation(() => Boolean, { description: '新增用戶' })
   async create(@Args('params') params: UserInput): Promise<boolean> {
     return await this.userService.create(params)
   }
@@ -16,4 +16,19 @@ export class UserResolver {
   async find(@Args('id') id: string): Promise<UserType> {
     return await this.userService.find(id);
   }  
+
+  @Query(() => Boolean, { description: '更新用戶' }) // 指定輸出類型
+  async update(
+    @Args('id') id: string, 
+    @Args('params') params: UserInput
+  ): Promise<boolean> {
+    return await this.userService.update(id, params);
+  }
+
+  @Query(() => Boolean, { description: '刪除一個' }) // 指定輸出類型
+  async del(
+    @Args('id') id: string,
+  ): Promise<boolean> {
+    return await this.userService.del(id);
+  }
 }
