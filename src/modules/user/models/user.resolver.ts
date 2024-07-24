@@ -12,8 +12,8 @@ export class UserResolver {
     return await this.userService.create(params)
   }
   
-  @Query(() => Boolean)
+  @Query(() => UserType, { description: '使用id查詢用戶' }) // 指定輸出類型
   async find(@Args('id') id: string): Promise<UserType> {
     return await this.userService.find(id);
-  }
+  }  
 }
